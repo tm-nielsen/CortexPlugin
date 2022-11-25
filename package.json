@@ -1,0 +1,24 @@
+{
+  "name": "ca.bonspiel-games.emotiv",
+  "version": "0.1.0",
+  "displayName": "Emotiv Integration",
+  "description": "Connect to BCI devices using an event based wrapper for the Emotiv Cortex API. Seamlessly subsribe to datastreams from multiple headsets simultaneously, handle in game training, profile management, and much more.\n\nBuilt off of the official Emotiv support.",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "documentationUrl": "https://example.com/",
+  "changelogUrl": "https://example.com/changelog.html",
+  "licensesUrl": "https://example.com/licensing.html",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "1.1.2"
+  },
+  "keywords": [
+    "BCI",
+    "Accessibility"
+  ],
+  "author": {
+    "name": "Chloe Nielsen",
+    "email": "braincurling@gmail.com",
+    "url": "https://www.bonspielgames.ca"
+  },
+  "type": "library"
+}

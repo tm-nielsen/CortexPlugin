@@ -1,0 +1,16 @@
+{
+    "name": "bonspiel-games.emotiv",
+    "rootNamespace": "EmotivUnityPlugin",
+    "references": [
+        "GUID:ea73f805f48068f409cafb2b12726b78"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
