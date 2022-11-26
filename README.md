@@ -32,7 +32,10 @@ Cortex.Start(clientId, clientSecret);
 
 3. Subscribe to the Cortex.HeadsetQueryResult to receive a list of available headsets
 ```cs
-Cortex.HeadsetQueryResult += (List<Headset> headsets) => Debug.Log($"{headsets.Count} headsets detected!");
+Cortex.HeadsetQueryResult += (List<Headset> headsets) =>
+{
+    Debug.Log($"{headsets.Count} headsets detected!");
+}
 ```
 
 4. Connect to a headset, starting data streams
@@ -44,7 +47,7 @@ Cortex.StartSession(headsetId);
 ```cs
 Cortex.profiles.QueryProfiles();
 Cortex.profiles.LoadProfile(profileName, headsetId);
-Cortex.profiles.CreateProfile(profile2);
+Cortex.profiles.CreateProfile("Jimmy");
 ```
 
 6. Subscribe to a headset's data streams from anywhere
