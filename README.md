@@ -6,11 +6,14 @@ This is the plugin used in Curl for integration with the Emotiv Cortex Service, 
 1. Install Unity. You can get it for free at [unity3d.com](https://unity3d.com/get-unity/download).
 
 2. Make an EmotivID on [the official website](https://emotiv.com)
-3. Create a Cortex application on [the account page](https://emotiv.com/my-account) to get an app client id and secret. **MAKE SURE TO NOTE THE CLIENT SECRET AS IT WILL ONLY BE SHOWN ONCE**
+
+3. Create a Cortex application on [the account page](https://emotiv.com/my-account) to get an app client id and secret.
+**MAKE SURE TO NOTE THE CLIENT SECRET AS IT WILL ONLY BE SHOWN ONCE**
+
 4. [Download and install](https://www.emotiv.com/developer/) the EMOITV Launcher
 
 ## How to Use
-More detail is available in [the documentation](https://bonspiel-games.gitbook.io/emotiv-unity-plugin/)
+More detail is available in [the documentation](https://bonspiel-games.gitbook.io/cortex-unity-plugin//)
 
 1. Import the EmotivUnityPlugin namespace
 ```cs
