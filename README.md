@@ -12,6 +12,8 @@ This is the plugin used in Curl for integration with the Emotiv Cortex Service, 
 
 4. [Download and install](https://www.emotiv.com/emotiv-launcher/#download) the EMOITV Launcher
 
+5. Add the CortexPlugin package to any Unity project via git URL in the package manager: `https://github.com/cm-nielsen/CortexPlugin.git`
+
 ## How to Use
 More detail is available in **[The Documentation](https://bonspiel-games.gitbook.io/cortex-unity-plugin/)**
 
