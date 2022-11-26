@@ -22,7 +22,7 @@ More detail is available in **[The Documentation](https://bonspiel-games.gitbook
 
 1. Import the EmotivUnityPlugin namespace
 ```cs
-using EmotivUnityPlugin
+using CortexPlugin
 ```
 
 2. Call Cortex.Start() with your cortex app's client id and secret. Using Awake() and script execution order in your project settings can ensure that this is called before any other monobehavior functions, letting you freely use Cortex functionality anywhere else without worry.
