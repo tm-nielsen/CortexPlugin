@@ -13,7 +13,7 @@ This is the plugin used in Curl for integration with the Emotiv Cortex Service, 
 4. [Download and install](https://www.emotiv.com/emotiv-launcher/#download) the EMOITV Launcher
 
 ## How to Use
-More detail is available in [the documentation](https://bonspiel-games.gitbook.io/cortex-unity-plugin//)
+More detail is available in **[The Documentation](https://bonspiel-games.gitbook.io/cortex-unity-plugin/)**
 
 1. Import the EmotivUnityPlugin namespace
 ```cs
