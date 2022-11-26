@@ -1,6 +1,6 @@
 {
   "name": "ca.bonspiel-games.cortex",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "displayName": "Cortex",
   "description": "Connect to BCI devices using an event based wrapper for the Emotiv Cortex API. Seamlessly subsribe to datastreams from multiple headsets simultaneously, handle in game training, profile management, and much more.\n\nBuilt off of the official Emotiv support.",
   "unity": "2019.1",
@@ -9,7 +9,8 @@
   "changelogUrl": "https://github.com/cm-nielsen/EmotivPlugin/CHANGELOG.md",
   "licensesUrl": "https://github.com/cm-nielsen/EmotivPlugin/LICENSE.md",
   "dependencies": {
-    "com.unity.nuget.newtonsoft-json": "1.1.2"
+    "com.unity.nuget.newtonsoft-json": "1.1.2",
+    "com.unity.textmeshpro": "1.0.0"
   },
   "keywords": [
     "BCI",

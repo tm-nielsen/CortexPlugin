@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 
 
-namespace EmotivUnityPlugin
+namespace CortexPlugin
 {
     /// <summary>
     /// Manages the creation and data subcription of mutliple headset sessios at once

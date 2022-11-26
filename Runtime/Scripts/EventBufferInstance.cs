@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EmotivUnityPlugin
+namespace CortexPlugin
 {
     public class EventBufferInstance : MonoBehaviour
     {
@@ -99,7 +99,14 @@ namespace EmotivUnityPlugin
 
         public static EventBuffer<T> operator +(EventBuffer<T> lhs, Action<T> rhs)
         {
-            lhs.Subscribe(rhs);
+            if (lhs == null)
+            {
+                Debug.LogError("Attempted to subscribe to a null EventBuffer," +
+                    "make sure you are starting Cortex before trying to use it.");
+            }
+            else
+                lhs.Subscribe(rhs);
+
             return lhs;
         }
         public static EventBuffer<T> operator -(EventBuffer<T> lhs, Action<T> rhs)

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EmotivUnityPlugin
+namespace CortexPlugin
 {
     /// <summary>
     /// Provides buffered events from active data streams to Unity synchronous events

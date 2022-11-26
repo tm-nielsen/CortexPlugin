@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace EmotivUnityPlugin
+namespace CortexPlugin
 {
     public class Utils
     {

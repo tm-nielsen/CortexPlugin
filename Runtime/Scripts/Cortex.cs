@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EmotivUnityPlugin
+namespace CortexPlugin
 {
     /// <summary>
     /// Primary interface for Emotiv integration
@@ -35,11 +35,6 @@ namespace EmotivUnityPlugin
         public static TrainingHandler training;
         public static ProfileManager profiles;
 
-        public static void Init(string appClientID, string appClientSecret)
-        {
-            Config.TmpAppDataDir = Application.productName;
-            Config.AppVersion = Application.version;
-        }
 
         /// <summary>
         /// <para>Initiates the authorizer and cortex client,
@@ -59,6 +54,9 @@ namespace EmotivUnityPlugin
             Config.AppClientSecret = clientSecret;
             Config.AppUrl = appURL;
             Config.EmotivAppsPath = emotivAppsPath;
+
+            Config.TmpAppDataDir = Application.productName;
+            Config.AppVersion = Application.version;
 
             printLogs = logs;
             printStreamData = streamPrint;

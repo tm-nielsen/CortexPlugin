@@ -1,4 +1,4 @@
-# Bonspiel Games Emotiv Unity Plugin
+# Bonspiel Games Cortex Unity Plugin
 
 This is the plugin used in Curl for integration with the Emotiv Cortex Service, adapted from [the official support](https://github.com/Emotiv/unity-plugin) for simplicity and support for multiple simultaneous headset streams. The contents are formatted as a Unity package and can be added to a unity project via git URL.
 
@@ -7,10 +7,10 @@ This is the plugin used in Curl for integration with the Emotiv Cortex Service, 
 
 2. Make an EmotivID on [the official website](https://emotiv.com)
 
-3. Create a Cortex application on [the account page](https://emotiv.com/my-account) to get an app client id and secret.
+3. Create a Cortex application on [the account page](https://emotiv.com/my-account/cortex-apps/) to get an app client id and secret.
 **MAKE SURE TO NOTE THE CLIENT SECRET AS IT WILL ONLY BE SHOWN ONCE**
 
-4. [Download and install](https://www.emotiv.com/developer/) the EMOITV Launcher
+4. [Download and install](https://www.emotiv.com/emotiv-launcher/#download) the EMOITV Launcher
 
 ## How to Use
 More detail is available in [the documentation](https://bonspiel-games.gitbook.io/cortex-unity-plugin//)

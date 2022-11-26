@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Timers;
 
-namespace EmotivUnityPlugin
+namespace CortexPlugin
 {
     /// <summary>
     /// Responsible for Authorizing process
@@ -53,7 +53,7 @@ namespace EmotivUnityPlugin
             _ctxClient.UserLoginNotify += OnUserLoginNotify;          // inform user loggin 
             _ctxClient.UserLogoutNotify += OnUserLogoutNotify;         // inform user log out
             _ctxClient.HasAccessRightOK += OnHasAccessRightOK;
-            _ctxClient.ORequestAccessDone += OnRequestAccessDone;
+            _ctxClient.RequestAccessDone += OnRequestAccessDone;
             _ctxClient.AccessRightGrantedDone += OnAccessRightGrantedOK; // inform user have granted or rejected access right for the App
             _ctxClient.AuthorizeOK += OnAuthorizedOK;
             _ctxClient.EULAAccepted += OnEULAAccepted;

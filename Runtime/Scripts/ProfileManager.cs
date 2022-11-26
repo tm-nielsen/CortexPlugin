@@ -2,7 +2,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace EmotivUnityPlugin
+namespace CortexPlugin
 {
     public class ProfileManager
     {

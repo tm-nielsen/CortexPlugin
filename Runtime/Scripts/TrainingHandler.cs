@@ -1,7 +1,7 @@
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-namespace EmotivUnityPlugin
+namespace CortexPlugin
 {
     public class TrainingHandler
     {

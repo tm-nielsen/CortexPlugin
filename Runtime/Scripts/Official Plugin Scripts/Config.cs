@@ -1,4 +1,4 @@
-namespace EmotivUnityPlugin
+namespace CortexPlugin
 {
     /// <summary>
     /// Stores API parameters

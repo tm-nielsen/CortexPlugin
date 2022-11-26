@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace EmotivUnityPlugin
+namespace CortexPlugin
 {
     public enum ContactQualityValue
     {
@@ -643,6 +643,11 @@ namespace EmotivUnityPlugin
         public double timestamp;
         public string detection;
         public string eventMessage;
+
+        public override string ToString()
+        {
+            return $"System Event: {eventMessage}, detection: {detection}, timestamp: {timestamp}";
+        }
     }
 
     // Detection information

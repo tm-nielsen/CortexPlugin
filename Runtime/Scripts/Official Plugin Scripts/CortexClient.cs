@@ -31,7 +31,7 @@ using System.Threading;
 using System.Timers;
 using WebSocket4Net;
 
-namespace EmotivUnityPlugin
+namespace CortexPlugin
 {
     /// <summary>
     /// Represents a simple client for the Cortex service.
@@ -69,7 +69,7 @@ namespace EmotivUnityPlugin
         //public event EventHandler HeadsetDisconnected;
         public event EventHandler<bool> HeadsetDisConnectedOK;
         public event EventHandler<bool> HasAccessRightOK;
-        public event EventHandler<bool> ORequestAccessDone;
+        public event EventHandler<bool> RequestAccessDone;
         public event EventHandler<bool> AccessRightGrantedDone;
         public event EventHandler<string> AuthorizeOK;
         public event EventHandler<UserDataInfo> GetUserLoginDone;
@@ -435,7 +435,7 @@ namespace EmotivUnityPlugin
             else if (method == "requestAccess")
             {
                 bool hasAccessRight = (bool)data["accessGranted"];
-                ORequestAccessDone(this, hasAccessRight);
+                RequestAccessDone(this, hasAccessRight);
             }
             else if (method == "generateNewToken")
             {

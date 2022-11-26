@@ -1,7 +1,7 @@
 using Newtonsoft.Json.Linq;
 using System.Collections;
 
-namespace EmotivUnityPlugin
+namespace CortexPlugin
 {
     public class Headset
     {
