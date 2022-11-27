@@ -12,6 +12,7 @@ namespace CortexExamples
         public TextMeshProUGUI headsetListText;
 
         Dictionary<string, Headset> availableHeadsets;
+        string pairingHeadset = "";
 
 
         void Start()
@@ -26,8 +27,8 @@ namespace CortexExamples
 
             foreach (Headset h in headsets)
             {
-                availableHeadsets[h.headsetID] = h;
-                headsetList += h.headsetID + "\n";
+                availableHeadsets[h.headsetId] = h;
+                headsetList += h.headsetId + "\n";
             }
 
             headsetListText.text = headsetList;
@@ -44,6 +45,7 @@ namespace CortexExamples
                 }
                 else
                 {
+                    pairingHeadset = headsetId;
                     Cortex.ConnectDevice(headsetId);
                     Cortex.HeadsetConnected += PairWithNewlyConnectedHeadset;
                 }
@@ -54,7 +56,11 @@ namespace CortexExamples
 
         void PairWithNewlyConnectedHeadset(HeadsetConnectEventArgs args)
         {
+            if (args.HeadsetId != pairingHeadset)
+                return;
+
             Cortex.StartSession(args.HeadsetId);
+            pairingHeadset = "";
             Cortex.HeadsetConnected -= PairWithNewlyConnectedHeadset;
         }
     }

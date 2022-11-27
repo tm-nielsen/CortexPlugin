@@ -779,14 +779,14 @@ namespace CortexPlugin
             SendTextMessage(param, "requestAccess", true);
         }
         // Authorize
-        public void Authorize(string licenseID, int debitNumber)
+        public void Authorize(string licenseId, int debitNumber)
         {
             JObject param = new JObject();
             param.Add("clientId", Config.AppClientId);
             param.Add("clientSecret", Config.AppClientSecret);
-            if (!String.IsNullOrEmpty(licenseID))
+            if (!String.IsNullOrEmpty(licenseId))
             {
-                param.Add("license", licenseID);
+                param.Add("license", licenseId);
             }
             param.Add("debit", debitNumber);
             SendTextMessage(param, "authorize", true);
@@ -856,7 +856,7 @@ namespace CortexPlugin
             SendTextMessage(param, "controlDevice", true);
         }
         // connect device
-        // required params: headsetID
+        // required params: headsetId
         // mappings is required if connect to epoc flex
         public void ConnectDevice(string headsetId, JObject mappings = null)
         {

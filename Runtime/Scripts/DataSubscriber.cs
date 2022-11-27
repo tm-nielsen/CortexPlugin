@@ -31,14 +31,14 @@ namespace CortexPlugin
         /// Add a new data stream to the event handling process
         /// </summary>
         /// <param name="newStream">Stream to add</param>
-        /// <param name="sessionID">id of the corresponding session</param>
-        /// <param name="headsetID">id of the relevant headset</param>
-        public void AddStream(DataStream newStream, string sessionID, string headsetID)
+        /// <param name="sessionId">id of the corresponding session</param>
+        /// <param name="headsetId">id of the relevant headset</param>
+        public void AddStream(DataStream newStream, string sessionId, string headsetId)
         {
             try
             {
                 lock (mux)
-                    dataStreamSubscribers[headsetID] = new DataStreamEventBuffer(newStream, sessionID, headsetID);
+                    dataStreamSubscribers[headsetId] = new DataStreamEventBuffer(newStream, sessionId, headsetId);
                 if (Cortex.printLogs)
                     print("New stream added");
             }
@@ -56,7 +56,7 @@ namespace CortexPlugin
         {
             string toRemove = null;
             foreach (var item in dataStreamSubscribers)
-                if (item.Value.sessionID == id)
+                if (item.Value.sessionId == id)
                     toRemove = item.Key;
 
             if (!string.IsNullOrEmpty(toRemove))
@@ -66,13 +66,13 @@ namespace CortexPlugin
         /// <summary>
         /// Checks if a Data Stream currently exists for the given headset
         /// </summary>
-        /// <param name="headsetID">ID of desired headset stream</param>
+        /// <param name="headsetId">ID of desired headset stream</param>
         /// <returns></returns>
-        public bool DataStreamExists(string headsetID)
+        public bool DataStreamExists(string headsetId)
         {
-            if (string.IsNullOrEmpty(headsetID))
+            if (string.IsNullOrEmpty(headsetId))
                 return false;
-            if (!dataStreamSubscribers.ContainsKey(headsetID))
+            if (!dataStreamSubscribers.ContainsKey(headsetId))
                 return false;
             return true;
         }
@@ -84,21 +84,21 @@ namespace CortexPlugin
         /// making it able to trigger updates to game state
         /// </summary>
         /// <typeparam name="T">The type of data to subscribe to</typeparam>
-        /// <param name="headsetID">ID of the desired headset stream</param>
+        /// <param name="headsetId">ID of the desired headset stream</param>
         /// <param name="callBack">Function to be called</param>
         /// <returns>true if successful</returns>
-        public bool SubscribeDataStream<T>(string headsetID, Action<T> callBack) where T : DataStreamEventArgs
+        public bool SubscribeDataStream<T>(string headsetId, Action<T> callBack) where T : DataStreamEventArgs
         {
-            if (string.IsNullOrEmpty(headsetID))
+            if (string.IsNullOrEmpty(headsetId))
                 return false;
-            if (!dataStreamSubscribers.ContainsKey(headsetID))
+            if (!dataStreamSubscribers.ContainsKey(headsetId))
             {
                 Debug.LogWarning("DataSubscriber: attempted to Subscribe to a headset stream that doesn't exist");
                 return false;
             }
             try
             {
-                DataStreamEventBuffer dataStreamSubscriber = dataStreamSubscribers[headsetID];
+                DataStreamEventBuffer dataStreamSubscriber = dataStreamSubscribers[headsetId];
                 switch (typeof(T))
                 {
                     case Type mType when mType == typeof(MentalCommand):
@@ -107,8 +107,8 @@ namespace CortexPlugin
                     case Type dType when dType == typeof(DeviceInfo):
                         dataStreamSubscriber.DevDataReceived += (Action<DeviceInfo>)callBack;
                         break;
-                    case Type sType when sType == typeof(SysEventArgs):
-                        dataStreamSubscriber.SysEventReceived += (Action<SysEventArgs>)callBack;
+                    case Type sType when sType == typeof(SystemEventArgs):
+                        dataStreamSubscriber.SysEventReceived += (Action<SystemEventArgs>)callBack;
                         break;
                     default:
                         Debug.LogWarning($"Attempted to subscribe to unsupported data stream: {typeof(T)}");
@@ -128,14 +128,14 @@ namespace CortexPlugin
         /// data stream of the given headset, provided it exists.
         /// </summary>
         /// <typeparam name="T">The type of data to subscribe to</typeparam>
-        /// <param name="headsetID">ID of the desired headset stream</param>
+        /// <param name="headsetId">ID of the desired headset stream</param>
         /// <param name="callBack">Function to be called</param>
         /// <returns>true if successful</returns>
-        public bool UnsubscribeDataStream<T>(string headsetID, Action<T> callBack) where T : DataStreamEventArgs
+        public bool UnsubscribeDataStream<T>(string headsetId, Action<T> callBack) where T : DataStreamEventArgs
         {
-            if (string.IsNullOrEmpty(headsetID))
+            if (string.IsNullOrEmpty(headsetId))
                 return false;
-            if (!dataStreamSubscribers.ContainsKey(headsetID))
+            if (!dataStreamSubscribers.ContainsKey(headsetId))
             {
                 if (!Cortex.isQuitting)
                     Debug.LogWarning("DataSubscriber: attempted to Unsubscribe from a headset stream that doesn't exist");
@@ -144,7 +144,7 @@ namespace CortexPlugin
 
             try
             {
-                DataStreamEventBuffer dataStreamSubscriber = dataStreamSubscribers[headsetID];
+                DataStreamEventBuffer dataStreamSubscriber = dataStreamSubscribers[headsetId];
                 switch (typeof(T))
                 {
                     case Type mType when mType == typeof(MentalCommand):
@@ -153,8 +153,8 @@ namespace CortexPlugin
                     case Type dType when dType == typeof(DeviceInfo):
                         dataStreamSubscriber.DevDataReceived -= (Action<DeviceInfo>)callBack;
                         break;
-                    case Type sType when sType == typeof(SysEventArgs):
-                        dataStreamSubscriber.SysEventReceived -= (Action<SysEventArgs>)callBack;
+                    case Type sType when sType == typeof(SystemEventArgs):
+                        dataStreamSubscriber.SysEventReceived -= (Action<SystemEventArgs>)callBack;
                         break;
                     default:
                         Debug.LogWarning($"Attempted to subscribe to unsupported data stream: {typeof(T)}");
@@ -178,17 +178,17 @@ namespace CortexPlugin
     public class DataStreamEventBuffer
     {
         DataStream dataStream;
-        public string sessionID, headsetID;
+        public string sessionId, headsetId;
 
         public EventBuffer<MentalCommand> MentalCommandReceived = new EventBuffer<MentalCommand>();
         public EventBuffer<DeviceInfo> DevDataReceived = new EventBuffer<DeviceInfo>();
-        public EventBuffer<SysEventArgs> SysEventReceived = new EventBuffer<SysEventArgs>();
+        public EventBuffer<SystemEventArgs> SysEventReceived = new EventBuffer<SystemEventArgs>();
 
-        public DataStreamEventBuffer(DataStream stream, string sessionID, string headsetID)
+        public DataStreamEventBuffer(DataStream stream, string sessionId, string headsetId)
         {
             dataStream = stream;
-            this.sessionID = sessionID;
-            this.headsetID = headsetID;
+            this.sessionId = sessionId;
+            this.headsetId = headsetId;
             dataStream.MentalCommandReceived += MentalCommandReceived.OnParentEvent;
             dataStream.DevDataReceived += DevDataReceived.OnParentEvent;
             dataStream.SysEventReceived += SysEventReceived.OnParentEvent;

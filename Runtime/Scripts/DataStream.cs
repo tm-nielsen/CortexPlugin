@@ -12,20 +12,20 @@ namespace CortexPlugin
     public class DataStream
     {
         public event EventHandler<MentalCommand> MentalCommandReceived;
-        public event EventHandler<SysEventArgs> SysEventReceived;
+        public event EventHandler<SystemEventArgs> SysEventReceived;
         public event EventHandler<DeviceInfo> DevDataReceived;
 
         DeviceInfo devData;
 
-        string sessionID;
+        string sessionId;
 
         public DataStream(string id)
         {
-            sessionID = id;
+            sessionId = id;
         }
         public void Close()
         {
-            DataStreamManager.Instance.CloseSession(sessionID);
+            DataStreamManager.Instance.CloseSession(sessionId);
         }
 
 
@@ -58,7 +58,7 @@ namespace CortexPlugin
                     case DataStreamName.SysEvents:
                         string detection = Convert.ToString(data[1]);
                         string eventMsg = Convert.ToString(data[2]);
-                        SysEventArgs sysEvent = new SysEventArgs(time, detection, eventMsg);
+                        SystemEventArgs sysEvent = new SystemEventArgs(time, detection, eventMsg);
 
                         SysEventReceived(this, sysEvent);
 

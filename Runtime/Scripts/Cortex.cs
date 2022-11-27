@@ -45,12 +45,12 @@ namespace CortexPlugin
         /// <param name="streamPrint">enable continous prints of incoming stream data</param>
         /// <param name="license">uneccessary in most cases,
         /// if you need this you probably know what you are doing and will be changing this code anyways</param>
-        public static void Start(string clientID, string clientSecret,
+        public static void Start(string clientId, string clientSecret,
             string appURL = "wss://localhost:6868",
             string emotivAppsPath = "C:\\Program Files\\EmotivApps",
             bool logs = false, bool streamPrint = false, string license = "")
         {
-            Config.AppClientId = clientID;
+            Config.AppClientId = clientId;
             Config.AppClientSecret = clientSecret;
             Config.AppUrl = appURL;
             Config.EmotivAppsPath = emotivAppsPath;
@@ -102,13 +102,13 @@ namespace CortexPlugin
             DataStreamStarted = new EventBuffer<string>();
             dataStreamManager.DataStreamStarted += DataStreamStarted.OnParentEvent;
 
+            // add buffer for when a headset is unexpectedly disconnected (sends headset id)
+            DataStreamEnded = new EventBuffer<string>();
+            dataStreamManager.DataStreamEnded += DataStreamEnded.OnParentEvent;
+
             // add buffer for headset connection (pairing with computer)
             HeadsetConnected = new EventBuffer<HeadsetConnectEventArgs>();
             ctxClient.HeadsetConnectNotify += HeadsetConnected.OnParentEvent;
-
-            // add buffer for when a headset is unexpectedly disconnected (sends session ID)
-            DataStreamEnded = new EventBuffer<string>();
-            dataStreamManager.DataStreamEnded += DataStreamEnded.OnParentEvent;
 
             // add buffer for connection state changing
             ConnectionStateChanged = new EventBuffer<ConnectToCortexStates>();
@@ -147,20 +147,20 @@ namespace CortexPlugin
         /// will automatically subscribe to basic data streams
         /// and trigger HeadsetConnected event
         /// </summary>
-        /// <param name="headsetID"></param>
-        public static void StartSession(string headsetID) => dataStreamManager.StartSession(headsetID);
+        /// <param name="headsetId"></param>
+        public static void StartSession(string headsetId) => dataStreamManager.StartSession(headsetId);
         /// <summary>
         /// Ends the sessions specified by the given ID
         /// </summary>
-        public static void EndSession(string sessionID) => dataStreamManager.CloseSession(sessionID);
+        public static void EndSession(string sessionId) => dataStreamManager.CloseSession(sessionId);
         /// <summary>
-        /// Ends the session specified by the given headsetID
+        /// Ends the session specified by the given headsetId
         /// </summary>
-        public static void EndSessionByHeadset(string headsetID) => dataStreamManager.CloseSessionByHeadset(headsetID);
+        public static void EndSessionByHeadset(string headsetId) => dataStreamManager.CloseSessionByHeadset(headsetId);
         /// <summary>
-        /// Gets the active session associated with the given headsetID
+        /// Gets the active session associated with the given headsetId
         /// </summary>
-        public static string GetSessionByHeadset(string headsetID) => dataStreamManager.GetSessionByHeadset(headsetID);
+        public static string GetSessionByHeadset(string headsetId) => dataStreamManager.GetSessionByHeadset(headsetId);
         /// <summary>
         /// Ends the session created most recently
         /// </summary>
@@ -178,28 +178,28 @@ namespace CortexPlugin
         /// <summary>
         /// Checks if a given headset is already in use
         /// </summary>
-        /// <param name="headsetID">headset to check</param>
+        /// <param name="headsetId">headset to check</param>
         /// <returns>true if there is already an extant session for the headset</returns>
-        public static bool HeadsetIsAlreadyInUse(string headsetID)
+        public static bool HeadsetIsAlreadyInUse(string headsetId)
         {
-            return dataStreamManager.HeadsetIsAlreadyInUse(headsetID);
+            return dataStreamManager.HeadsetIsAlreadyInUse(headsetId);
         }
 
         /// <summary>
         /// Connect a Device that is discovered, but unavailable
         /// (bluetooth pairing, basically)
         /// </summary>
-        public static void ConnectDevice(string headsetID)
+        public static void ConnectDevice(string headsetId)
         {
-            ctxClient.ConnectDevice(headsetID);
+            ctxClient.ConnectDevice(headsetId);
         }
 
         /// <summary>
         /// Check if a data stream currently exists for the given headset
         /// </summary>
-        /// <param name="headsetID"></param>
+        /// <param name="headsetId"></param>
         /// <returns>ID of desired headset stream</returns>
-        public static bool DataStreamExists(string headsetID) => dataSubscriber.DataStreamExists(headsetID);
+        public static bool DataStreamExists(string headsetId) => dataSubscriber.DataStreamExists(headsetId);
 
         /// <summary>
         /// Subscribe to incoming data stream events for the given headset,
@@ -207,54 +207,54 @@ namespace CortexPlugin
         /// The headset must first be paired, and have an active session
         /// </summary>
         /// <typeparam name="T">type of data to recieve</typeparam>
-        /// <param name="headsetID">headset to get data from</param>
+        /// <param name="headsetId">headset to get data from</param>
         /// <param name="action">method to be called when new data is recieved</param>
         /// <returns>true if subscription was successful</returns>
-        public static bool SubscribeDataStream<T>(string headsetID, Action<T> action) where T : DataStreamEventArgs
-            => dataSubscriber.SubscribeDataStream(headsetID, action);
+        public static bool SubscribeDataStream<T>(string headsetId, Action<T> action) where T : DataStreamEventArgs
+            => dataSubscriber.SubscribeDataStream(headsetId, action);
         /// <summary>
         /// Unsubscribe from incoming data stream events for the given headset,
         /// all subscriptions will be cleared automatically on session closure,
         /// but it is efficient to unsubscribe when the data feed is uneccesary
         /// </summary>
         /// <typeparam name="T">type of data subscription</typeparam>
-        /// <param name="headsetID">headset of the desired stream</param>
+        /// <param name="headsetId">headset of the desired stream</param>
         /// <param name="action">method to remove from callback</param>
         /// <returns>true if unsubscription was successful</returns>
-        public static bool UnsubscribeDataStream<T>(string headsetID, Action<T> action) where T : DataStreamEventArgs
-            => dataSubscriber.UnsubscribeDataStream(headsetID, action);
+        public static bool UnsubscribeDataStream<T>(string headsetId, Action<T> action) where T : DataStreamEventArgs
+            => dataSubscriber.UnsubscribeDataStream(headsetId, action);
 
         /// <summary>
         /// Simplified interface to SubscribeDataStream for mental commands
         /// </summary>
-        public static bool SubscribeMentalCommands(string headsetID, Action<MentalCommand> action)
-            => SubscribeDataStream(headsetID, action);
+        public static bool SubscribeMentalCommands(string headsetId, Action<MentalCommand> action)
+            => SubscribeDataStream(headsetId, action);
         /// <summary>
         /// Simplified interface to UnsubscribeDataStream for mental commands
         /// </summary>
-        public static bool UnsubscribeMentalCommands(string headsetID, Action<MentalCommand> action)
-            => UnsubscribeDataStream(headsetID, action);
+        public static bool UnsubscribeMentalCommands(string headsetId, Action<MentalCommand> action)
+            => UnsubscribeDataStream(headsetId, action);
 
         /// <summary>
         /// Simplified interface to SubscribeDataStream for device information
         /// </summary>
-        public static bool SubscribeDeviceInfo(string headsetID, Action<DeviceInfo> action)
-            => SubscribeDataStream(headsetID, action);
+        public static bool SubscribeDeviceInfo(string headsetId, Action<DeviceInfo> action)
+            => SubscribeDataStream(headsetId, action);
         /// <summary>
         /// Simplified interface to UnsubscribeDataStream for devide information
         /// </summary>
-        public static bool UnsubscribeDeviceInfo(string headsetID, Action<DeviceInfo> action)
-            => UnsubscribeDataStream(headsetID, action);
+        public static bool UnsubscribeDeviceInfo(string headsetId, Action<DeviceInfo> action)
+            => UnsubscribeDataStream(headsetId, action);
 
         /// <summary>
         /// Simplified interface to SubscribeDataStream for system events
         /// </summary>
-        public static bool SubscribeSysEvents(string headsetID, Action<SysEventArgs> action)
-            => SubscribeDataStream(headsetID, action);
+        public static bool SubscribeSysEvents(string headsetId, Action<SystemEventArgs> action)
+            => SubscribeDataStream(headsetId, action);
         /// <summary>
         /// Simplified interface to UnsubscribeDataStream for system events
         /// </summary>
-        public static bool UnsubscribeSysEvents(string headsetID, Action<SysEventArgs> action)
-            => UnsubscribeDataStream(headsetID, action);
+        public static bool UnsubscribeSysEvents(string headsetId, Action<SystemEventArgs> action)
+            => UnsubscribeDataStream(headsetId, action);
     }
 }

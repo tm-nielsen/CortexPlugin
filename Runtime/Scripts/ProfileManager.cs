@@ -21,15 +21,15 @@ namespace CortexPlugin
         string token { get => auth.CortexToken; }
 
         public void QueryProfiles() { try { ctxClient.QueryProfile(token); } catch (System.Exception e) { Debug.LogWarning(e); } }
-        public void GetCurrentProfile(string headsetID) => ctxClient.GetCurrentProfile(token, headsetID);
+        public void GetCurrentProfile(string headsetId) => ctxClient.GetCurrentProfile(token, headsetId);
         public void CreateProfile(string profileName) => ctxClient.SetupProfile(token, profileName, "create");
         public void DeleteProfile(string profileName) => ctxClient.SetupProfile(token, profileName, "delete");
         public void RenameProfile(string oldName, string newName) => ctxClient.SetupProfile(token, oldName, "rename", newProfileName: newName);
-        public void LoadProfile(string profileName, string headsetID) => ctxClient.SetupProfile(token, profileName, "load", headsetID);
-        public void UnloadProfile(string profileName, string headsetID) => ctxClient.SetupProfile(token, profileName, "unload", headsetID);
-        public void SaveProfile(string profileName, string headsetID) => ctxClient.SetupProfile(token, profileName, "save", headsetID);
+        public void LoadProfile(string profileName, string headsetId) => ctxClient.SetupProfile(token, profileName, "load", headsetId);
+        public void UnloadProfile(string profileName, string headsetId) => ctxClient.SetupProfile(token, profileName, "unload", headsetId);
+        public void SaveProfile(string profileName, string headsetId) => ctxClient.SetupProfile(token, profileName, "save", headsetId);
 
-        public void LoadGuestProfile(string headsetID) => ctxClient.LoadGuestProfile(token, headsetID);
+        public void LoadGuestProfile(string headsetId) => ctxClient.LoadGuestProfile(token, headsetId);
 
         /// <summary>
         /// Instantite all available event buffers to allow engine

@@ -153,20 +153,20 @@ namespace CortexPlugin
         /// Called by CortexClient when a data stream is automatically close, internally remove session
         /// and notify externals through event
         /// </summary>
-        private void OnStreamStop(object sender, string sessionID)
+        private void OnStreamStop(object sender, string sessionId)
         {
-            string headsetID = "";
+            string headsetId = "";
             foreach (var item in headsetToSessionID)
-                if (item.Value == sessionID)
-                    headsetID = item.Key;
+                if (item.Value == sessionId)
+                    headsetId = item.Key;
 
-            sessions.Remove(sessionID);
-            dataSubscriber.RemoveStreamBySessionID(sessionID);
+            sessions.Remove(sessionId);
+            dataSubscriber.RemoveStreamBySessionID(sessionId);
 
-            if (!string.IsNullOrEmpty(headsetID))
+            if (!string.IsNullOrEmpty(headsetId))
             {
-                headsetToSessionID.Remove(headsetID);
-                DataStreamEnded(this, headsetID);
+                headsetToSessionID.Remove(headsetId);
+                DataStreamEnded(this, headsetId);
             }
         }
 
@@ -186,26 +186,26 @@ namespace CortexPlugin
         /// Starts a cortex session with a given headset,
         /// triggers a callback that will also subscribe to data streams
         /// </summary>
-        public void StartSession(string headsetID)
+        public void StartSession(string headsetId)
         {
             if (Cortex.printLogs)
-                Debug.Log($"Attempting to start session with headset: {headsetID}");
-            ctxClient.CreateSession(authorizer.CortexToken, headsetID, "open");
-            connectingHeadset = headsetID;
+                Debug.Log($"Attempting to start session with headset: {headsetId}");
+            ctxClient.CreateSession(authorizer.CortexToken, headsetId, "open");
+            connectingHeadset = headsetId;
         }
         /// <summary>
         /// Closes an individual session
         /// </summary>
-        /// <param name="sessionID">the session to close</param>
-        public void CloseSession(string sessionID)
+        /// <param name="sessionId">the session to close</param>
+        public void CloseSession(string sessionId)
         {
-            ctxClient.UpdateSession(authorizer.CortexToken, sessionID, "close");
-            sessions.Remove(sessionID);
-            dataSubscriber.RemoveStreamBySessionID(sessionID);
+            ctxClient.UpdateSession(authorizer.CortexToken, sessionId, "close");
+            sessions.Remove(sessionId);
+            dataSubscriber.RemoveStreamBySessionID(sessionId);
 
             string toRemove = null;
             foreach (var item in headsetToSessionID)
-                if (item.Value == sessionID)
+                if (item.Value == sessionId)
                     toRemove = item.Key;
 
             if (!string.IsNullOrEmpty(toRemove))
@@ -215,27 +215,27 @@ namespace CortexPlugin
             }
         }
         /// <summary>
-        /// Closes an individual session by the associated headsetID
+        /// Closes an individual session by the associated headsetId
         /// </summary>
-        /// <param name="headsetID">the id of the headset associated with the session</param>
-        public void CloseSessionByHeadset(string headsetID)
+        /// <param name="headsetId">the id of the headset associated with the session</param>
+        public void CloseSessionByHeadset(string headsetId)
         {
-            string sessionID = headsetToSessionID[headsetID];
-            ctxClient.UpdateSession(authorizer.CortexToken, sessionID, "close");
-            sessions.Remove(sessionID);
-            dataSubscriber.RemoveStreamByHeadsetID(headsetID);
-            headsetToSessionID.Remove(headsetID);
-            DataStreamEnded(this, headsetID);
+            string sessionId = headsetToSessionID[headsetId];
+            ctxClient.UpdateSession(authorizer.CortexToken, sessionId, "close");
+            sessions.Remove(sessionId);
+            dataSubscriber.RemoveStreamByHeadsetID(headsetId);
+            headsetToSessionID.Remove(headsetId);
+            DataStreamEnded(this, headsetId);
         }
         /// <summary>
         /// Gets the active session id associated with the headset
         /// </summary>
-        /// <param name="headsetID"></param>
+        /// <param name="headsetId"></param>
         /// <returns>the session ID if it exists, otherwise null</returns>
-        public string GetSessionByHeadset(string headsetID)
+        public string GetSessionByHeadset(string headsetId)
         {
-            if (headsetToSessionID.ContainsKey(headsetID))
-                return headsetToSessionID[headsetID];
+            if (headsetToSessionID.ContainsKey(headsetId))
+                return headsetToSessionID[headsetId];
             else
                 return null;
         }
@@ -244,17 +244,17 @@ namespace CortexPlugin
         /// </summary>
         public void CloseMostRecentSession()
         {
-            string sessionID = headsetToSessionID.Last().Value;
-            CloseSession(sessionID);
+            string sessionId = headsetToSessionID.Last().Value;
+            CloseSession(sessionId);
         }
         /// <summary>
         /// Checks if the given headset already has a live session
         /// </summary>
-        /// <param name="headsetID"></param>
+        /// <param name="headsetId"></param>
         /// <returns>true if the headset currently has a live session</returns>
-        public bool HeadsetIsAlreadyInUse(string headsetID)
+        public bool HeadsetIsAlreadyInUse(string headsetId)
         {
-            return headsetToSessionID.ContainsKey(headsetID);
+            return headsetToSessionID.ContainsKey(headsetId);
         }
     }
 }

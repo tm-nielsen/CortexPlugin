@@ -5,7 +5,7 @@ namespace CortexPlugin
 {
     public class Headset
     {
-        public string headsetID;
+        public string headsetId;
         public string status;
         public string serialId;
         public string firmwareVersion;
@@ -23,33 +23,33 @@ namespace CortexPlugin
         }
         public Headset(JObject jHeadset)
         {
-            headsetID = (string)jHeadset["id"];
+            headsetId = (string)jHeadset["id"];
 
-            if (headsetID.Contains(HeadsetNames.epoc_plus))
+            if (headsetId.Contains(HeadsetNames.epoc_plus))
             {
                 headsetType = HeadsetTypes.HEADSET_TYPE_EPOC_PLUS;
             }
-            else if (headsetID.Contains(HeadsetNames.epoc_flex))
+            else if (headsetId.Contains(HeadsetNames.epoc_flex))
             {
                 headsetType = HeadsetTypes.HEADSET_TYPE_EPOC_FLEX;
             }
-            else if (headsetID.Contains(HeadsetNames.epoc_x))
+            else if (headsetId.Contains(HeadsetNames.epoc_x))
             {
                 headsetType = HeadsetTypes.HEADSET_TYPE_EPOC_X;
             }
-            else if (headsetID.Contains(HeadsetNames.insight2))
+            else if (headsetId.Contains(HeadsetNames.insight2))
             {
                 headsetType = HeadsetTypes.HEADSET_TYPE_INSIGHT2;
             }
-            else if (headsetID.Contains(HeadsetNames.insight))
+            else if (headsetId.Contains(HeadsetNames.insight))
             {
                 headsetType = HeadsetTypes.HEADSET_TYPE_INSIGHT;
             }
-            else if (headsetID.Contains(HeadsetNames.mn8))
+            else if (headsetId.Contains(HeadsetNames.mn8))
             {
                 headsetType = HeadsetTypes.HEADSET_TYPE_MN8;
             }
-            else if (headsetID.Contains(HeadsetNames.epoc))
+            else if (headsetId.Contains(HeadsetNames.epoc))
             {
                 headsetType = HeadsetTypes.HEADSET_TYPE_EPOC_STD;
             }
@@ -95,7 +95,7 @@ namespace CortexPlugin
 
         public bool Equals(Headset rhs)
         {
-            return headsetID == rhs.headsetID && status == rhs.status && connectedBy == rhs.connectedBy;
+            return headsetId == rhs.headsetId && status == rhs.status && connectedBy == rhs.connectedBy;
         }
     }
 }

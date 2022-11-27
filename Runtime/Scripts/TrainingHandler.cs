@@ -47,10 +47,10 @@ namespace CortexPlugin
         public void GetTrainedActions(string profileName) => ctxClient.GetTrainedSignatureActions(token, "mentalCommand", profileName);
         public void GetTrainingThreshold() => ctxClient.MentalCommandTrainingThreshold(token, sessionId: TargetSession);
         public void GetActionSensitivity(string profileName) => ctxClient.MentalCommandActionSensitivity(token, "get", profileName);
-        public void GetActionSensitivityBySession(string sessionID) => ctxClient.MentalCommandActionSensitivity(token, "get", sessionId: sessionID);
+        public void GetActionSensitivityBySession(string sessionId) => ctxClient.MentalCommandActionSensitivity(token, "get", sessionId: sessionId);
         public void GetActionSensitivity() => ctxClient.MentalCommandActionSensitivity(token, "get", sessionId: TargetSession);
         public void SetActionSensitivity(string profileName, int[] values) => ctxClient.MentalCommandActionSensitivity(token, "set", profileName, values: values);
-        public void SetActionSensitivityBySession(string sessionID, int[] values) => ctxClient.MentalCommandActionSensitivity(token, "set", sessionId: sessionID, values: values);
+        public void SetActionSensitivityBySession(string sessionId, int[] values) => ctxClient.MentalCommandActionSensitivity(token, "set", sessionId: sessionId, values: values);
         public void SetActionSensitivity(int[] values) => ctxClient.MentalCommandActionSensitivity(token, "set", sessionId: TargetSession, values: values);
 
 

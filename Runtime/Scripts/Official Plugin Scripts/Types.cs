@@ -229,11 +229,14 @@ namespace CortexPlugin
     {
         Service_connecting,
         EmotivApp_NotFound,
-        // Connected, // after connected to Cortex, we go to Login
+        // Connected, awaiting login in Emotiv launcher
         Login_waiting,
         Login_notYet,
+        // Attempting authorization,
+        // user need to open Emotiv launcher to authorize
         Authorizing,
         Authorize_failed,
+        // connected and authorized, good to go!
         Authorized,
         LicenseExpried,
         License_HardLimited
@@ -632,15 +635,18 @@ namespace CortexPlugin
     }
 
     // Sys events data object
-    public class SysEventArgs : DataStreamEventArgs
+    public class SystemEventArgs : DataStreamEventArgs
     {
-        public SysEventArgs(double time, string detect, string eventMsg)
+        public SystemEventArgs(double time, string detect, string eventMsg)
         {
             timestamp = time;
             detection = detect;
             eventMessage = eventMsg;
+
+            code = GetCodeFromDetection(detect);
         }
         public double timestamp;
+        public SystemEventCode code;
         public string detection;
         public string eventMessage;
 
@@ -648,6 +654,45 @@ namespace CortexPlugin
         {
             return $"System Event: {eventMessage}, detection: {detection}, timestamp: {timestamp}";
         }
+
+        SystemEventCode GetCodeFromDetection(string detection)
+        {
+            switch (detection)
+            {
+                case "MC_Started":
+                    return SystemEventCode.Started;
+                case "MC_Succeeded":
+                    return SystemEventCode.Suceeded;
+                case "MC_Failed":
+                    return SystemEventCode.Failed;
+                case "MC_Completed":
+                    return SystemEventCode.Completed;
+                case "MC_DataErased":
+                    return SystemEventCode.DataErased;
+                case "MC_Rejected":
+                    return SystemEventCode.Rejected;
+                case "MC_Reset":
+                    return SystemEventCode.Reset;
+                case "MC_AutoSamplingNeutralCompleted":
+                    return SystemEventCode.AutoSamplingNeutralCompleted;
+                case "MC_SignatureUpdated":
+                    return SystemEventCode.SignatureUpdated;
+            }
+            return SystemEventCode.Unknown;
+        }
+    }
+    public enum SystemEventCode : int
+    {
+        Started,
+        Suceeded,
+        Failed,
+        Completed,
+        DataErased,
+        Rejected,
+        Reset,
+        AutoSamplingNeutralCompleted,
+        SignatureUpdated,
+        Unknown
     }
 
     // Detection information

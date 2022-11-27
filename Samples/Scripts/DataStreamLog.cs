@@ -42,7 +42,7 @@ namespace CortexExamples
                 AddTextToLog(deviceInfo.ToString());
         }
 
-        void OnSystemEventReceived(SysEventArgs args)
+        void OnSystemEventReceived(SystemEventArgs args)
         {
             if (printSystemEvents)
                 AddTextToLog(args.ToString());
