@@ -40,14 +40,6 @@ namespace CortexPlugin
         /// normally due to a headset being disconnected
         /// </summary>
         public event EventHandler<string> DataStreamEnded;
-        /// <summary>
-        /// Sent out when a new list of available headsets has been found
-        /// </summary>
-        public event EventHandler<List<Headset>> QueryHeadsetOK
-        {
-            add { HeadsetFinder.Instance.QueryHeadsetOK += value; }
-            remove { HeadsetFinder.Instance.QueryHeadsetOK -= value; }
-        }
 
         public void Init()
         {
@@ -68,8 +60,6 @@ namespace CortexPlugin
                     ctxClient.QueryHeadsets("");
                 };
             ctxClient.StreamStopNotify += OnStreamStop;
-
-            authorizer.GetLicenseInfoDone += OnGetLicenseInfoDone;
         }
 
         /// <summary>
@@ -139,14 +129,6 @@ namespace CortexPlugin
                             sessions[sid].ConfigureDevHeaders((JArray)stream["cols"][2]);
                 }
             }
-        }
-
-        /// <summary>
-        /// Called by CortexClient when Authorization is complete, begin looking for available headsets
-        /// </summary>
-        private void OnGetLicenseInfoDone(object sender, License l)
-        {
-            HeadsetFinder.Instance.FinderInit();
         }
 
         /// <summary>
@@ -246,15 +228,6 @@ namespace CortexPlugin
         {
             string sessionId = headsetToSessionID.Last().Value;
             CloseSession(sessionId);
-        }
-        /// <summary>
-        /// Checks if the given headset already has a live session
-        /// </summary>
-        /// <param name="headsetId"></param>
-        /// <returns>true if the headset currently has a live session</returns>
-        public bool HeadsetIsAlreadyInUse(string headsetId)
-        {
-            return headsetToSessionID.ContainsKey(headsetId);
         }
     }
 }

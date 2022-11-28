@@ -53,7 +53,7 @@ namespace CortexPlugin
                             {
                                 action(data);
                             }
-                            catch (NullReferenceException e)
+                            catch (Exception e)
                             {
                                 if (action.Target == null)
                                 {
@@ -62,11 +62,6 @@ namespace CortexPlugin
                                         "It was automatically cleaned up, but best practice is to manually remove" +
                                         "event subcriptions in OnDisable() or OnDestroy() when they are no longer needed." + e.Message);
                                 }
-                                else
-                                    Debug.LogException(e);
-                            }
-                            catch (Exception e)
-                            {
                                 Debug.LogException(e);
                             }
                         }

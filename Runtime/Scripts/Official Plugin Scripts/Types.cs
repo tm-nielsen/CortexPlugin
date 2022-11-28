@@ -698,15 +698,36 @@ namespace CortexPlugin
     // Detection information
     public class DetectionInfo
     {
-        public DetectionInfo(string detection)
+        public DetectionInfo(JObject data)
         {
-            DetectionName = detection;
             Actions = new List<string>();
+            JArray actions = (JArray)data["actions"];
+            foreach (var ele in actions)
+            {
+                Actions.Add(ele.ToString());
+            }
+
             Controls = new List<string>();
+            JArray controls = (JArray)data["controls"];
+            foreach (var ele in actions)
+            {
+                Controls.Add(ele.ToString());
+            }
+
             Events = new List<string>();
+            JArray events = (JArray)data["events"];
+            foreach (var ele in actions)
+            {
+                Events.Add(ele.ToString());
+            }
+
             Signature = new List<string>();
+            JArray signature = (JArray)data["signature"];
+            foreach (var ele in actions)
+            {
+                Signature.Add(ele.ToString());
+            }
         }
-        public string DetectionName { get; }
         public List<string> Actions { get; set; }
         public List<string> Controls { get; set; }
         public List<string> Events { get; set; }
@@ -781,6 +802,9 @@ namespace CortexPlugin
                 isResponseToSet = true;
             }
         }
+        /// <summary>
+        /// sensitivity values of a set of trained actions. [1-10]
+        /// </summary>
         public int[] actionValues;
         public bool isResponseToSet;
     }

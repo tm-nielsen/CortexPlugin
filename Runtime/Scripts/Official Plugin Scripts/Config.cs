@@ -23,8 +23,6 @@ namespace CortexPlugin
         public static string TmpDataFileName = "data.dat";
         public static string ProfilesDir = "Profiles";
         public static string LogsDir = "logs";
-        public static int QUERY_HEADSET_TIME = 1000;
-        public static int TIME_CLOSE_STREAMS = 1000;
         public static int RETRY_CORTEXSERVICE_TIME = 5000;
         public static int WAIT_USERLOGIN_TIME = 5000;
 

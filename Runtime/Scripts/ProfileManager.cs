@@ -4,44 +4,95 @@ using UnityEngine;
 
 namespace CortexPlugin
 {
+    /// <summary>
+    /// Provides events and methods to enable profile management
+    /// </summary>
     public class ProfileManager
     {
         CortexClient ctxClient = CortexClient.Instance;
-        Authorizer auth = Authorizer.Instance;
 
-        // event buffers to enable engine synchronous callbacks
-        public EventBuffer<List<string>> ProfileQueryResult;
-        public EventBuffer<string> GetCurrentProfileResult;
+        /// <summary>
+        /// Provides a list of names beloning to all extant profiles
+        /// </summary>
+        public EventBuffer<List<string>> ProfileListQueryResult;
+        /// <summary>
+        /// Provides the profile name currently loaded to the headset provided in the related request
+        /// </summary>
+        public EventBuffer<string> CurrentProfileResult;
+        /// <summary>
+        /// A new profile has been created with the provided name
+        /// </summary>
         public EventBuffer<string> ProfileCreated;
+        /// <summary>
+        /// The profile with this name has been loaded to a headset
+        /// </summary>
         public EventBuffer<string> ProfileLoaded;
+        /// <summary>
+        /// A guest profile has been loaded, argument is not meaningful
+        /// </summary>
         public EventBuffer<string> GuestProfileLoaded;
+        /// <summary>
+        /// A profile has been unloaded from a headset
+        /// </summary>
         public EventBuffer<bool> ProfileUnloaded;
+        /// <summary>
+        /// Changes to the profile with this name have been saved
+        /// </summary>
         public EventBuffer<string> ProfileSaved;
 
-        string token { get => auth.CortexToken; }
+        string token { get => Authorizer.Instance.CortexToken; }
 
-        public void QueryProfiles() { try { ctxClient.QueryProfile(token); } catch (System.Exception e) { Debug.LogWarning(e); } }
-        public void GetCurrentProfile(string headsetId) => ctxClient.GetCurrentProfile(token, headsetId);
-        public void CreateProfile(string profileName) => ctxClient.SetupProfile(token, profileName, "create");
-        public void DeleteProfile(string profileName) => ctxClient.SetupProfile(token, profileName, "delete");
-        public void RenameProfile(string oldName, string newName) => ctxClient.SetupProfile(token, oldName, "rename", newProfileName: newName);
-        public void LoadProfile(string profileName, string headsetId) => ctxClient.SetupProfile(token, profileName, "load", headsetId);
-        public void UnloadProfile(string profileName, string headsetId) => ctxClient.SetupProfile(token, profileName, "unload", headsetId);
-        public void SaveProfile(string profileName, string headsetId) => ctxClient.SetupProfile(token, profileName, "save", headsetId);
+        /// <summary>
+        /// Trigger a query for available profiles
+        /// <para>subscribe to ProfileListQueryResult for result</para>
+        /// </summary>
+        public void QueryProfileList() { try { ctxClient.QueryProfile(token); } catch (System.Exception e) { Debug.LogWarning(e); } }
+        /// <summary>
+        /// Get the profile loaded on this headset
+        /// <para>subscribe to getCurrentProfileRersult for result</para>
+        /// </summary>
+        public void GetCurrent(string headsetId) => ctxClient.GetCurrentProfile(token, headsetId);
+        /// <summary>
+        /// Create a new profile with this name
+        /// </summary>
+        public void Create(string profileName) => ctxClient.SetupProfile(token, profileName, "create");
+        /// <summary>
+        /// Delete the profile with this name
+        /// </summary>
+        public void Delete(string profileName) => ctxClient.SetupProfile(token, profileName, "delete");
+        /// <summary>
+        /// Rename the profile with this name to this new name
+        /// </summary>
+        public void Rename(string oldName, string newName) => ctxClient.SetupProfile(token, oldName, "rename", newProfileName: newName);
+        /// <summary>
+        /// Load the profile with this name to this headset
+        /// </summary>
+        public void Load(string profileName, string headsetId) => ctxClient.SetupProfile(token, profileName, "load", headsetId);
+        /// <summary>
+        /// Unload this profile from this headset
+        /// </summary>
+        public void Unload(string profileName, string headsetId) => ctxClient.SetupProfile(token, profileName, "unload", headsetId);
+        /// <summary>
+        /// Save the potentially modified contents of the profile with htis name currently loaded to this headset.
+        /// Necessary to save training progress.
+        /// </summary>
+        public void Save(string profileName, string headsetId) => ctxClient.SetupProfile(token, profileName, "save", headsetId);
 
-        public void LoadGuestProfile(string headsetId) => ctxClient.LoadGuestProfile(token, headsetId);
+        /// <summary>
+        /// Load a guest profile to this headset
+        /// </summary>
+        public void LoadGuest(string headsetId) => ctxClient.LoadGuestProfile(token, headsetId);
 
         /// <summary>
         /// Instantite all available event buffers to allow engine
         /// synchronous callbacks, called by Cortex in Start
         /// </summary>
-        /// <param name="host">gameobject to attach event buffers to</param>
-        public void InstantiateEventBuffers(EventBufferInstance host)
+        public ProfileManager(EventBufferInstance host)
         {
-            ProfileQueryResult = new EventBuffer<List<string>>();
+            ProfileListQueryResult = new EventBuffer<List<string>>();
             ctxClient.QueryProfileOK += ParseProfileList;
 
-            GetCurrentProfileResult = new EventBuffer<string>();
+            CurrentProfileResult = new EventBuffer<string>();
             ctxClient.GetCurrentProfileDone += OnGetCurrentProfileOK;
 
             ProfileCreated = new EventBuffer<string>();
@@ -61,8 +112,8 @@ namespace CortexPlugin
 
             var buffers = new EventBufferBase[]
             {
-                ProfileQueryResult,
-                GetCurrentProfileResult,
+                ProfileListQueryResult,
+                CurrentProfileResult,
                 ProfileCreated,
                 ProfileLoaded,
                 GuestProfileLoaded,
@@ -75,7 +126,6 @@ namespace CortexPlugin
         /// <summary>
         /// Wraps the get profile list event callback with a readable type
         /// </summary>
-        /// <param name="profiles">data to be parsed into a list of profiles</param>
         void ParseProfileList(object sender, JArray profiles)
         {
             try
@@ -86,7 +136,7 @@ namespace CortexPlugin
                     string name = (string)ele["name"];
                     profileLists.Add(name);
                 }
-                ProfileQueryResult.OnParentEvent(this, profileLists);
+                ProfileListQueryResult.OnParentEvent(this, profileLists);
             }
             catch (System.Exception e)
             {
@@ -101,7 +151,7 @@ namespace CortexPlugin
         {
             if (data["name"].Type == JTokenType.Null)
             {
-                Debug.Log("OnGetCurrentProfileDone: no profile loaded with the headset");
+                Debug.LogWarning("No profile loaded with the headset");
             }
             else
             {
@@ -111,7 +161,7 @@ namespace CortexPlugin
                 if (!loadByThisApp)
                     Debug.LogWarning($"Profile: {profileName} is loaded, but by another app");
 
-                GetCurrentProfileResult.OnParentEvent(sender, profileName);
+                CurrentProfileResult.OnParentEvent(sender, profileName);
             }
         }
     }

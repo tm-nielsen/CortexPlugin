@@ -1,5 +1,7 @@
 # Bonspiel Games Cortex Unity Plugin
 
+## [Documentation](https://bonspiel-games.gitbook.io/cortex-unity-plugin/)
+
 This is the plugin used in Curl for integration with the Emotiv Cortex Service, adapted from [the official support](https://github.com/Emotiv/unity-plugin) for simplicity and support for multiple simultaneous headset streams. The contents are formatted as a Unity package and can be added to a unity project via git URL.
 
 ## Prerequisites

@@ -27,7 +27,7 @@ namespace CortexExamples
         {
             Cortex.SubscribeMentalCommands(headsetId, OnMentalCommandReceived);
             Cortex.SubscribeDeviceInfo(headsetId, OnDeviceInfoReceived);
-            Cortex.SubscribeSysEvents(headsetId, OnSystemEventReceived);
+            Cortex.SubscribeSystemEvents(headsetId, OnSystemEventReceived);
         }
 
         void OnMentalCommandReceived(MentalCommand mentalCommand)

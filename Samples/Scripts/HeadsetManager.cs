@@ -11,13 +11,40 @@ namespace CortexExamples
     {
         public TextMeshProUGUI headsetListText;
 
+        public float refreshPeriod = 1;
+
         Dictionary<string, Headset> availableHeadsets;
         string pairingHeadset = "";
 
+        float refreshTimer;
 
         void Start()
         {
+            Cortex.Authorized += OnAuthorize;
             Cortex.HeadsetQueryResult += OnHeadsetQueryResult;
+            Cortex.DeviceConnected += PairWithNewlyConnectedHeadset;
+
+            // disable the list until we can query headsets
+            gameObject.SetActive(false);
+        }
+
+        void OnAuthorize(License license)
+        {
+            Cortex.QueryHeadsets();
+            gameObject.SetActive(true);
+        }
+
+        void Update()
+        {
+            if (refreshPeriod <= 0)
+                return;
+
+            refreshTimer += Time.deltaTime;
+            if(refreshTimer > refreshPeriod)
+            {
+                refreshTimer -= refreshPeriod;
+                Cortex.QueryHeadsets();
+            }
         }
 
         void OnHeadsetQueryResult(List<Headset> headsets)
@@ -37,6 +64,7 @@ namespace CortexExamples
         // called by UI
         public void PairWithHeadset(string headsetId)
         {
+            headsetId = headsetId.ToUpper();
             if (availableHeadsets.ContainsKey(headsetId))
             {
                 if (availableHeadsets[headsetId].status == "connected")
@@ -47,7 +75,6 @@ namespace CortexExamples
                 {
                     pairingHeadset = headsetId;
                     Cortex.ConnectDevice(headsetId);
-                    Cortex.HeadsetConnected += PairWithNewlyConnectedHeadset;
                 }
             }
             else
@@ -61,7 +88,7 @@ namespace CortexExamples
 
             Cortex.StartSession(args.HeadsetId);
             pairingHeadset = "";
-            Cortex.HeadsetConnected -= PairWithNewlyConnectedHeadset;
+            Cortex.DeviceConnected -= PairWithNewlyConnectedHeadset;
         }
     }
 }
