@@ -45,18 +45,18 @@ Cortex.HeadsetQueryResult += (List<Headset> headsets) =>
 Cortex.StartSession(headsetId);
 ```
 
-5. Load or create a profile
-```cs
-Cortex.profiles.QueryProfiles();
-Cortex.profiles.LoadProfile(profileName, headsetId);
-Cortex.profiles.CreateProfile("Jimmy");
-```
-
-6. Subscribe to a headset's data streams from anywhere
+5. Subscribe to a headset's data streams from anywhere
 ```cs
 Cortex.SubscribeMentalCommands(headsetId, (MentalCommand command) => Debug.Log(command));
 Cortex.SubscribeDataStream<MentalCommand>(headsetId, OnMentalCommandReceived);
 Cortex.SubscribeDeviceInfo(headsetId, OnDeviceInfoReceived)
+```
+
+6. Load or create a profile
+```cs
+Cortex.profiles.QueryProfiles();
+Cortex.profiles.LoadProfile(profileName, headsetId);
+Cortex.profiles.CreateProfile("Jimmy");
 ```
 
 7. Train mental commands for a profile in engine with live feedback from the data stream
