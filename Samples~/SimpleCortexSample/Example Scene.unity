@@ -171,7 +171,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 142280687}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc69f7ae28ffcae47be1ef4f612a087f, type: 3}
+  m_Script: {fileID: 11500000, guid: d8ddb8b780bd3a34da689f477548d674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scrollRect: {fileID: 1916102862}
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 340179180}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4370832f569dd9d4897e69b174bba9fc, type: 3}
+  m_Script: {fileID: 11500000, guid: 3f35c3be793853a4197d37a103ec7f67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   stateText: {fileID: 1501651276}
@@ -592,7 +592,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 534344218}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f26bdf886d2c34bad330946fe80890, type: 3}
+  m_Script: {fileID: 11500000, guid: b03ad27af30e3de419eea69f9291bfec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   headsetListText: {fileID: 850158070}
@@ -1644,7 +1644,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1311441876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00f8c243d7b7fba4192c6b03712a770e, type: 3}
+  m_Script: {fileID: 11500000, guid: e8b7e0adaa99a4f4fbb636b1a032eaf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 5
@@ -1809,7 +1809,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1638370100}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12addad20b0780143944a406900c9f8b, type: 3}
+  m_Script: {fileID: 11500000, guid: 67a17db758bd1ee4fad36a9b654be1bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   clientId: 
@@ -2517,7 +2517,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 219.99998}
+  m_AnchoredPosition: {x: 0, y: 220.00002}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1940370588

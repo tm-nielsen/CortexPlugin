@@ -88,7 +88,6 @@ namespace CortexExamples
 
             Cortex.StartSession(args.HeadsetId);
             pairingHeadset = "";
-            Cortex.DeviceConnected -= PairWithNewlyConnectedHeadset;
         }
     }
 }
