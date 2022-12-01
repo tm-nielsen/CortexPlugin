@@ -1,6 +1,6 @@
 {
   "name": "ca.bonspielgames.cortex",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "displayName": "Cortex",
   "description": "Connect to BCI devices using an event based wrapper for the Emotiv Cortex API. Seamlessly subsribe to datastreams from multiple headsets simultaneously, handle in game training, profile management, and much more.\n\nBuilt off of the official Emotiv support.",
   "unity": "2019.1",
@@ -13,6 +13,11 @@
       "displayName": "Simple Cortex Example",
       "description": "basic example of using the Cortex functionality",
       "path": "Samples~/SimpleCortexSample"
+    },
+    {
+      "displayName": "Vector Graphics Set",
+      "description": "set of sample vector graphics relevant to BCI",
+      "path": "Samples~/VectorGraphicsSet"
     }
   ],
   "dependencies": {
