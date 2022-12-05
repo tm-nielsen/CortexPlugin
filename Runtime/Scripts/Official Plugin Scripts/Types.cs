@@ -754,9 +754,9 @@ namespace CortexPlugin
                 if ((actionName == "neutral" || actionName == "push")
                     && (times < trainingRoundsCompleted || trainingRoundsCompleted < 0))
                     trainingRoundsCompleted = times;
-                if (trainingRoundsCompleted < 0)
-                    trainingRoundsCompleted = 0;
             }
+            if (trainingRoundsCompleted < 0)
+                trainingRoundsCompleted = 0;
         }
         public List<TrainedAction> trainedActions;
         public int trainingCount;
