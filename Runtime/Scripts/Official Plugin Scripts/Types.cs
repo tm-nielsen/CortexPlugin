@@ -643,7 +643,7 @@ namespace CortexPlugin
             detection = detect;
             eventMessage = eventMsg;
 
-            code = GetCodeFromDetection(detect);
+            code = GetCodeFromDetection(eventMsg);
         }
         public double timestamp;
         public SystemEventCode code;

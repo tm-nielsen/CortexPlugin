@@ -39,6 +39,10 @@ namespace CortexPlugin
         /// Changes to the profile with this name have been saved
         /// </summary>
         public EventBuffer<string> ProfileSaved;
+        /// <summary>
+        /// A profile has been deleted
+        /// </summary>
+        public EventBuffer<string> ProfileDeleted;
 
         string token { get => Authorizer.Instance.CortexToken; }
 
@@ -109,6 +113,9 @@ namespace CortexPlugin
 
             ProfileSaved = new EventBuffer<string>();
             ctxClient.SaveProfileOK += ProfileSaved.OnParentEvent;
+
+            ProfileDeleted = new EventBuffer<string>();
+            ctxClient.DeleteProfileOK += ProfileDeleted.OnParentEvent;
 
             var buffers = new EventBufferBase[]
             {
