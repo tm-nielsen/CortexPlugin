@@ -118,7 +118,11 @@ namespace CortexPlugin
             if (Cortex.printLogs)
                 Debug.Log("DataStreamManager: SubscribeDataOK");
             foreach (JObject i in e.FailList)
-                Debug.LogWarning($"ERROR: Failed to subscribe to {i["streamName"]} stream");
+            {
+                ErrorMsgEventArgs args = new ErrorMsgEventArgs((int)i["code"],
+                    $"Failed to subscribe to {i["stream name"]} stream, {i["message"]}", "subscribe");
+                Cortex.ErrorRecieved.OnParentEvent(this, args);
+            }
 
             foreach (JObject stream in e.SuccessList)
             {
