@@ -1,6 +1,8 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json.Linq;
 
 namespace CortexPlugin
 {
@@ -192,6 +194,15 @@ namespace CortexPlugin
         {
             ctxClient.ConnectDevice(headsetId);
         }
+        /// <summary>
+        /// Connect a flex device with specified mappings
+        /// https://emotiv.gitbook.io/cortex-api/headset/controldevice#epoc-flex-mapping
+        /// </summary>
+        public static void ConnectFlexDevice(string headsetId, JObject flexMappings)
+        {
+            ctxClient.ConnectDevice(headsetId, flexMappings);
+        }
+        
 
         /// <summary>
         /// Returns true if a data stream currently exists for the given headset
