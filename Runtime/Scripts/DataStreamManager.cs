@@ -120,7 +120,8 @@ namespace CortexPlugin
             foreach (JObject i in e.FailList)
             {
                 ErrorMsgEventArgs args = new ErrorMsgEventArgs((int)i["code"],
-                    $"Failed to subscribe to {i["stream name"]} stream, {i["message"]}", "subscribe");
+                    $"Failed to subscribe to {i["stream name"]} stream, {i["message"]}. " +
+                    $"Flex mapping may be unsupported for mental commands","subscribe");
                 Cortex.ErrorRecieved.OnParentEvent(this, args);
             }
 
